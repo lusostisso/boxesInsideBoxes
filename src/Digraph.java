@@ -70,7 +70,11 @@ public class Digraph {
         }
     }
     return caixaComMaisFilhos;
-}
+  }
+
+  public Map<Caixa, List<Caixa>> getGraph() {
+    return graph;
+  }
 
   public Iterable<Caixa> getAdj(Caixa v) {
     List<Caixa> res = graph.get(v);

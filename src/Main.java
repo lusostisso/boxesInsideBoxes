@@ -1,11 +1,15 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 public class Main {
+    private static Map<Caixa, Integer> longestPathCache = new HashMap<>();
+    private static int longestPathLength = 0;
     public static void main(String[] args) {
         LinkedList <Caixa> caixas = new LinkedList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("src/CasosTeste/caso00010.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/CasosTeste/caso05000.txt"))) {
             String linha;
 
             while ((linha = br.readLine()) != null) {
@@ -50,8 +54,31 @@ public class Main {
 
         Digraph diagraph = new Digraph(caixas);
         
-        System.out.println(diagraph.toDot());
+        //System.out.println(diagraph.toDot());
 
-        System.out.println("Caixa com mais filhos "+ diagraph.getCaixaWithMoreVerts());
+        Caixa caixaComMaisFilhos = diagraph.getCaixaWithMoreVerts();
+        System.out.println("Caixa com mais filhos "+ caixaComMaisFilhos);
+
+        for (Caixa caixa : diagraph.getGraph().keySet()) {
+            int currentPathLength = findLongestPath(diagraph, caixa);
+            longestPathLength = Math.max(longestPathLength, currentPathLength);
+        }
+
+        System.out.println("O maior caminho possível é: " + longestPathLength);
+    }
+
+    private static int findLongestPath(Digraph diagraph, Caixa caixa) {
+        if (longestPathCache.containsKey(caixa)) {
+            return longestPathCache.get(caixa);
+        }
+
+        int maxLength = 0;
+        for (Caixa adjCaixa : diagraph.getAdj(caixa)) {
+            int pathLength = findLongestPath(diagraph, adjCaixa);
+            maxLength = Math.max(maxLength, pathLength);
+        }
+
+        longestPathCache.put(caixa, 1 + maxLength);
+        return 1 + maxLength;
     }
 }
