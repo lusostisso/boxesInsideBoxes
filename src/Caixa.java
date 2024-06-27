@@ -1,9 +1,9 @@
-public class Caixa implements Comparable<Caixa> {
+public class Caixa{
     private int largura;
     private int altura;
     private int profundidade;
 
-    public Caixa(int largura, int altura, int profundidade) {
+    public Caixa (int largura, int altura, int profundidade) {
         this.largura = largura;
         this.altura = altura;
         this.profundidade = profundidade;
@@ -19,11 +19,6 @@ public class Caixa implements Comparable<Caixa> {
 
     public int getProfundidade() {
         return profundidade;
-    }
-
-    @Override
-    public int compareTo(Caixa outraCaixa) {
-        return outraCaixa.largura - this.largura;
     }
 
     @Override

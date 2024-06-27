@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Caixa> caixas = new ArrayList<>();
         long startTime = System.nanoTime();
+        //adicione os casos de teste dentro da pasta CasosTeste
         try (BufferedReader br = new BufferedReader(new FileReader("src/CasosTeste/caso10000.txt"))) {
             String linha;
 
@@ -56,8 +57,6 @@ public class Main {
         }
 
         Digraph diagraph = new Digraph(caixas);
-
-        // System.out.println(diagraph.toDot());
 
         for (Caixa caixa : diagraph.getGraph().keySet()) {
             int currentPathLength = findLongestPath(diagraph, caixa);
